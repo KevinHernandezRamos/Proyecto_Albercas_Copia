@@ -32,9 +32,9 @@ class AsistenciaWindow(QWidget):
 
         layout_principal = QVBoxLayout(self)
 
-        # ==============================
+
         # TÍTULO
-        # ==============================
+   
 
         titulo = QLabel("Control de Asistencia")
         titulo.setObjectName("title")
@@ -47,9 +47,9 @@ class AsistenciaWindow(QWidget):
         layout_principal.addWidget(titulo)
         layout_principal.addWidget(subtitulo)
 
-        # ==============================
+      
         # BÚSQUEDA
-        # ==============================
+
 
         fila_busqueda = QHBoxLayout()
 
@@ -68,9 +68,9 @@ class AsistenciaWindow(QWidget):
 
         layout_principal.addLayout(fila_busqueda)
 
-        # ==============================
+
         # DATOS DEL USUARIO
-        # ==============================
+   
 
         self.usuario_label = QLabel(
             "Usuario seleccionado: ninguno"
@@ -120,9 +120,9 @@ class AsistenciaWindow(QWidget):
             self.permiso
         )
 
-        # ==============================
+
         # BOTONES
-        # ==============================
+
 
         fila_botones = QHBoxLayout()
 
@@ -153,9 +153,9 @@ class AsistenciaWindow(QWidget):
         layout_principal.addLayout(
             fila_botones
         )
-        # ==============================
+
         # FILTROS DEL HISTORIAL
-        # ==============================
+  
 
         fila_filtros = QHBoxLayout()
 
@@ -216,9 +216,9 @@ class AsistenciaWindow(QWidget):
     fila_filtros
 )
 
-        # ==============================
+
         # TABLA
-        # ==============================
+    
 
         self.tabla = QTableWidget()
 
@@ -318,10 +318,8 @@ class AsistenciaWindow(QWidget):
             )
         )
 
-    # ==========================================
-    # CARGAR ASISTENCIAS
-    # ==========================================
 
+    # CARGAR ASISTENCIAS
     def cargar_asistencias(self):
 
         conexion = conectar()
@@ -399,10 +397,8 @@ class AsistenciaWindow(QWidget):
             )
         self.actualizar_personas_dentro()
 
-    # ==========================================
-    # BUSCAR USUARIO
-    # ==========================================
 
+    # BUSCAR USUARIO
     def buscar_usuario(self):
 
         texto = self.busqueda.text().strip()
@@ -455,10 +451,7 @@ class AsistenciaWindow(QWidget):
             f"{usuario['nombre']}"
         )
 
-    # ==========================================
     # REGISTRAR ENTRADA
-    # ==========================================
-
     def registrar_entrada(self):
         if not hasattr(self, "usuario_seleccionado"):
             QMessageBox.warning(
@@ -539,10 +532,8 @@ class AsistenciaWindow(QWidget):
 
         self.cargar_asistencias()
         self.permiso.clear()
-    # ==========================================
-    # REGISTRAR SALIDA
-    # ==========================================
 
+    # REGISTRAR SALIDA
     def registrar_salida(self):
 
         if not hasattr(self, "usuario_seleccionado"):
