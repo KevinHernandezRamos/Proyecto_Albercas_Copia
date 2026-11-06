@@ -158,17 +158,14 @@ class MainWindow(QMainWindow):
 
 
 
-        # ==========================================
+      
         # BARRA LATERAL
-        # ==========================================
         sidebar = QFrame()
         sidebar.setObjectName("sidebar")
         sidebar.setFixedWidth(230)
         sidebar_layout = QVBoxLayout(sidebar)
         sidebar_layout.setContentsMargins(15, 20, 15, 20)
         sidebar_layout.setSpacing(8)
-
-
         # Logo / nombre
         logo = QLabel("ABERCAS")
         logo.setObjectName("logo")
@@ -181,9 +178,9 @@ class MainWindow(QMainWindow):
         sidebar_layout.addWidget(subtitulo)
         sidebar_layout.addSpacing(20)
 
-        # ==========================================
+   
         # BOTONES DEL MENÚ
-        # ==========================================
+
 
         botones = [
             "Inicio",
@@ -223,9 +220,8 @@ class MainWindow(QMainWindow):
         boton_cerrar.setObjectName("logoutButton")
         boton_cerrar.clicked.connect(self.cerrar_sesion)
         sidebar_layout.addWidget(boton_cerrar)
-        # ==========================================
+      
         # CONTENIDO PRINCIPAL
-        # ==========================================
         contenido = QWidget()
         contenido_layout = QVBoxLayout(contenido)
         contenido_layout.setContentsMargins(30, 30, 30, 30)
@@ -257,9 +253,9 @@ class MainWindow(QMainWindow):
 
 
 
-        # ==========================================
+       
         # TARJETAS
-        # ==========================================
+        
         self.tarjetas_layout = QGridLayout()
         self.tarjetas_layout.setHorizontalSpacing(15)
         self.tarjetas_layout.setVerticalSpacing(15)
@@ -317,9 +313,9 @@ class MainWindow(QMainWindow):
         contenido_layout.addLayout(self.tarjetas_layout)
 
 
-        # ==========================================
+   
         # RESUMEN DE ASISTENCIA
-        # ==========================================
+      
 
         asistencia_card = QFrame()
         asistencia_card.setObjectName("card")
@@ -362,9 +358,9 @@ class MainWindow(QMainWindow):
 
 
 
-        # ==========================================
+     
         # NIVELES DE NATACION
-        # ==========================================
+     
 
         niveles_card = QFrame()
         niveles_card.setObjectName("card")
@@ -380,9 +376,9 @@ class MainWindow(QMainWindow):
         self.mostrar_niveles(niveles)
 
 
-        # ========================================
+      
         # ENTRADAS POR HORA
-        # ========================================
+       
 
         horas_card = QFrame()
         horas_card.setObjectName("card")
@@ -401,9 +397,9 @@ class MainWindow(QMainWindow):
         self.mostrar_entradas_por_hora(entradas_por_hora)
 
 
-        # ==========================================
+        
         # MENSAJE DE BIENVENIDA
-        # ==========================================
+       
 
         bienvenida = QFrame()
         bienvenida.setObjectName("welcomeCard")
@@ -421,9 +417,9 @@ class MainWindow(QMainWindow):
         bienvenida_layout.addWidget(texto_bienvenida)
         contenido_layout.addWidget(bienvenida)
         contenido_layout.addStretch()
-        # ==========================================
+        
         # AGREGAR TODOS
-        # ==========================================
+        
         layout_principal.addWidget(sidebar)
         layout_principal.addWidget(contenido)
 
