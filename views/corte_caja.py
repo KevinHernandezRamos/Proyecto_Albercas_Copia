@@ -40,10 +40,8 @@ class CorteCajaWindow(QWidget):
 
         layout_principal = QVBoxLayout(self)
 
-        # ==========================================
-        # TITULO
-        # ==========================================
 
+        # TITULO
         titulo = QLabel("Corte de caja")
         titulo.setObjectName("tituloPrincipal")
 
@@ -57,10 +55,8 @@ class CorteCajaWindow(QWidget):
 
         layout_principal.addWidget(subtitulo)
 
-        # ==========================================
+   
         # RESUMEN
-        # ==========================================
-
         resumen_layout = QHBoxLayout()
 
         self.total_ventas_label = QLabel(
@@ -93,10 +89,8 @@ class CorteCajaWindow(QWidget):
 
         layout_principal.addLayout(resumen_layout)
 
-        # ==========================================
-        # DENOMINACIONES
-        # ==========================================
 
+        # DENOMINACIONES
         titulo_denominaciones = QLabel(
             "Conteo de efectivo"
         )
@@ -176,10 +170,8 @@ class CorteCajaWindow(QWidget):
             self.tabla_denominaciones
         )
 
-        # ==========================================
-        # BOTONES
-        # ==========================================
 
+        # BOTONES
         botones_layout = QHBoxLayout()
 
         boton_calcular = QPushButton(
@@ -211,10 +203,8 @@ class CorteCajaWindow(QWidget):
 
         layout_principal.addLayout(botones_layout)
 
-    # ==========================================
-    # CARGAR DATOS
-    # ==========================================
 
+    # CARGAR DATOS
     def cargar_datos(self):
 
         conexion = conectar()
@@ -253,10 +243,8 @@ class CorteCajaWindow(QWidget):
             f"Ventas en efectivo: ${self.ventas_efectivo:.2f}"
         )
 
-    # ==========================================
-    # CALCULAR EFECTIVO
-    # ==========================================
 
+    # CALCULAR EFECTIVO
     def calcular_efectivo(self):
 
         total_efectivo = 0
@@ -339,10 +327,8 @@ class CorteCajaWindow(QWidget):
         self.ventana_historial = HistorialCortesWindow()
         self.ventana_historial.show()
 
-    # ==========================================
-    # GUARDAR CORTE
-    # ==========================================
 
+    # GUARDAR CORTE
     def guardar_corte(self):
 
         if not self.calcular_efectivo():
