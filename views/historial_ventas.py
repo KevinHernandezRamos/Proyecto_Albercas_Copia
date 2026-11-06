@@ -39,10 +39,8 @@ class HistorialVentasWindow(QWidget):
 
         layout = QVBoxLayout(self)
 
-        # ==========================================
-        # TÍTULO
-        # ==========================================
 
+        # TÍTULO
         titulo = QLabel("Historial de ventas")
         titulo.setObjectName("tituloPrincipal")
 
@@ -56,10 +54,8 @@ class HistorialVentasWindow(QWidget):
 
         layout.addWidget(subtitulo)
 
-        # ==========================================
+  
         # BUSCADOR
-        # ==========================================
-
         filtros = QHBoxLayout()
 
         self.busqueda = QLineEdit()
@@ -96,41 +92,25 @@ class HistorialVentasWindow(QWidget):
         filtros.addWidget(boton_actualizar)
         filtros.addWidget(boton_detalle)
         filtros.addWidget(boton_recibo)
-
         layout.addLayout(filtros)
-
-        # ==========================================
         # RESUMEN
-        # ==========================================
-
         resumen = QHBoxLayout()
-
         self.label_total_ventas = QLabel(
             "Ventas encontradas: 0"
         )
-
         self.label_total_recaudado = QLabel(
             "Total recaudado: $0.00"
         )
-
         resumen.addWidget(
             self.label_total_ventas
         )
-
         resumen.addWidget(
             self.label_total_recaudado
         )
-
         layout.addLayout(resumen)
-
-        # ==========================================
         # TABLA
-        # ==========================================
-
         self.tabla = QTableWidget()
-
         self.tabla.setColumnCount(7)
-
         self.tabla.setHorizontalHeaderLabels([
             "Folio",
             "Fecha",
@@ -144,31 +124,21 @@ class HistorialVentasWindow(QWidget):
         self.tabla.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
-
         self.tabla.setEditTriggers(
             QTableWidget.NoEditTriggers
         )
-
         self.tabla.setSelectionBehavior(
             QTableWidget.SelectRows
         )
-
         layout.addWidget(self.tabla)
 
-    # ==========================================
+   
     # CARGAR VENTAS
-    # ==========================================
-
     def cargar_ventas(self):
-
         texto = self.busqueda.text().strip()
-
         conexion = conectar()
-
         cursor = conexion.cursor()
-
         try:
-
             consulta = """
                 SELECT
                     v.id,
@@ -183,45 +153,31 @@ class HistorialVentasWindow(QWidget):
                 LEFT JOIN empleados e
                     ON v.empleado_id = e.id
             """
-
             parametros = []
-
             if texto:
-
                 consulta += """
                     WHERE
                         v.folio LIKE ?
                         OR e.nombre LIKE ?
                         OR v.metodo_pago LIKE ?
                 """
-
                 buscar = f"%{texto}%"
-
                 parametros = [
                     buscar,
                     buscar,
                     buscar
                 ]
-
             consulta += """
                 ORDER BY
                     v.id DESC
             """
-
             cursor.execute(
                 consulta,
                 parametros
             )
-
             ventas = cursor.fetchall()
-
             self.tabla.setRowCount(0)
-
-
-            # ==========================================
             # CALCULAR RESUMEN
-            # ==========================================
-
             total_ventas = len(ventas)
             total_recaudado = sum(
                 venta["total"] or 0
@@ -233,11 +189,8 @@ class HistorialVentasWindow(QWidget):
             self.label_total_recaudado.setText(
                 f"Total recaudado: ${total_recaudado:.2f}"
             )
-
             for fila, venta in enumerate(ventas):
-
                 self.tabla.insertRow(fila)
-
                 self.tabla.setItem(
                     fila,
                     0,
@@ -245,7 +198,6 @@ class HistorialVentasWindow(QWidget):
                         venta["folio"]
                     )
                 )
-
                 self.tabla.setItem(
                     fila,
                     1,
@@ -253,7 +205,6 @@ class HistorialVentasWindow(QWidget):
                         venta["fecha"]
                     )
                 )
-
                 self.tabla.setItem(
                     fila,
                     2,
@@ -261,7 +212,6 @@ class HistorialVentasWindow(QWidget):
                         venta["hora"]
                     )
                 )
-
                 self.tabla.setItem(
                     fila,
                     3,
@@ -269,7 +219,6 @@ class HistorialVentasWindow(QWidget):
                         venta[4]
                     )
                 )
-
                 self.tabla.setItem(
                     fila,
                     4,
@@ -277,7 +226,6 @@ class HistorialVentasWindow(QWidget):
                     f"${venta['total']:.2f}"
                     )
                 )
-
                 self.tabla.setItem(
                     fila,
                     5,
@@ -285,7 +233,6 @@ class HistorialVentasWindow(QWidget):
                         venta["metodo_pago"]
                     )
                 )
-
                 self.tabla.setItem(
                     fila,
                     6,
@@ -293,7 +240,6 @@ class HistorialVentasWindow(QWidget):
                         venta["estatus"]
                     )
                 )
-
                     # Guardar el ID de la venta en la fila
                 self.tabla.item(
                     fila,
@@ -302,62 +248,43 @@ class HistorialVentasWindow(QWidget):
                     Qt.UserRole,
                     venta["id"]
                 )
-
         except Exception as error:
-
             QMessageBox.critical(
                 self,
                 "Error",
                 f"No se pudo cargar el historial:\n\n{error}"
             )
-
         finally:
-
             conexion.close()
 
-    # ==========================================
     # VER DETALLE DE VENTA
-    # ==========================================
-
     def ver_detalle(self):
-
         fila = self.tabla.currentRow()
-
         if fila < 0:
-
             QMessageBox.warning(
                 self,
                 "Venta no seleccionada",
                 "Selecciona una venta de la tabla."
             )
-
             return
 
         item = self.tabla.item(
             fila,
             0
         )
-
         venta_id = item.data(
             Qt.UserRole
         )
-
         if venta_id is None:
-
             QMessageBox.warning(
                 self,
                 "Error",
                 "No se pudo obtener la venta seleccionada."
             )
-
             return
-
         conexion = conectar()
-
         cursor = conexion.cursor()
-
         try:
-
             cursor.execute("""
                 SELECT
                     v.folio,
@@ -374,19 +301,14 @@ class HistorialVentasWindow(QWidget):
                     ON v.empleado_id = e.id
                 WHERE v.id = ?
             """, (venta_id,))
-
             venta = cursor.fetchone()
-
             if venta is None:
-
                 QMessageBox.warning(
                     self,
                     "Venta no encontrada",
                     "La venta seleccionada no existe."
                 )
-
                 return
-
             cursor.execute("""
                 SELECT
                     p.codigo,
@@ -399,9 +321,7 @@ class HistorialVentasWindow(QWidget):
                     ON dv.producto_id = p.id
                 WHERE dv.venta_id = ?
             """, (venta_id,))
-
             detalles = cursor.fetchall()
-
             mensaje = (
                 f"Folio: {venta['folio']}\n"
                 f"Fecha: {venta['fecha']}\n"
@@ -412,94 +332,66 @@ class HistorialVentasWindow(QWidget):
                 f"PRODUCTOS\n"
                 f"------------------------------\n"
             )
-
             for detalle in detalles:
-
                 mensaje += (
                     f"{detalle['nombre']}\n"
                     f"  Cantidad: {detalle['cantidad']}\n"
                     f"  Precio: ${detalle['precio_unitario']:.2f}\n"
                     f"  Subtotal: ${detalle['subtotal']:.2f}\n\n"
                 )
-
             mensaje += (
                 "------------------------------\n"
                 f"Subtotal: ${venta['subtotal']:.2f}\n"
                 f"Descuento: ${venta['descuento']:.2f}\n"
                 f"TOTAL: ${venta['total']:.2f}"
             )
-
             QMessageBox.information(
                 self,
                 "Detalle de venta",
                 mensaje
             )
-
         except Exception as error:
-
             QMessageBox.critical(
                 self,
                 "Error",
                 f"No se pudo consultar el detalle:\n\n{error}"
             )
-    # ==========================================
     # GENERAR RECIBO
-    # ==========================================
-
     def generar_recibo(self):
-
         fila = self.tabla.currentRow()
-
         if fila < 0:
-
             QMessageBox.warning(
                 self,
                 "Venta no seleccionada",
                 "Selecciona una venta de la tabla."
             )
-
             return
-
         item = self.tabla.item(
             fila,
             0
         )
-
         venta_id = item.data(
             Qt.UserRole
         )
-
         if venta_id is None:
-
             QMessageBox.warning(
                 self,
                 "Error",
                 "No se pudo obtener el ID de la venta."
             )
-
             return
-
         ruta_archivo, _ = QFileDialog.getSaveFileName(
             self,
             "Guardar recibo",
             f"Recibo_{item.text()}.pdf",
             "Archivos PDF (*.pdf)"
         )
-
         if not ruta_archivo:
-
             return
-
         conexion = conectar()
-
         cursor = conexion.cursor()
-
         try:
-
-            # ==========================================
             # INFORMACIÓN DE LA VENTA
-            # ==========================================
-
             cursor.execute("""
                 SELECT
                     v.folio,
@@ -516,23 +408,15 @@ class HistorialVentasWindow(QWidget):
                     ON v.empleado_id = e.id
                 WHERE v.id = ?
             """, (venta_id,))
-
             venta = cursor.fetchone()
-
             if venta is None:
-
                 QMessageBox.warning(
                     self,
                     "Venta no encontrada",
                     "No se encontró la venta seleccionada."
                 )
-
                 return
-
-            # ==========================================
             # PRODUCTOS DE LA VENTA
-            # ==========================================
-
             cursor.execute("""
                 SELECT
                     p.codigo,
@@ -545,15 +429,9 @@ class HistorialVentasWindow(QWidget):
                     ON dv.producto_id = p.id
                 WHERE dv.venta_id = ?
             """, (venta_id,))
-
             detalles = cursor.fetchall()
-
-            # ==========================================
             # GENERAR PDF
-            # ==========================================
-
             from views.recibo import generar_recibo
-
             generar_recibo(venta, detalles, ruta_archivo)
             QMessageBox.information(
                 self,
@@ -571,13 +449,11 @@ class HistorialVentasWindow(QWidget):
                     f"Error: {e}"
                 )
         except Exception as error:
-
             QMessageBox.critical(
                 self,
                 "Error",
                 f"No se pudo generar el recibo:\n\n{error}"
             )
-
         finally:
 
             conexion.close()
