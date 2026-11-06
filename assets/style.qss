@@ -1,0 +1,75 @@
+QWidget {
+    background-color: #f5f6fa;
+    font-family: "Segoe UI";
+    color: #202124;
+}
+
+#sidebar {
+    background-color: #17202a;
+}
+
+#logo {
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+}
+
+QPushButton#menuButton {
+    background-color: #17202a;
+    color: white;
+    border: none;
+    text-align: left;
+    padding: 10px 15px;
+    font-size: 14px;
+    border-radius: 6px;
+    min-height: 22px;
+}
+
+QPushButton#menuButton:hover {
+    background-color: #273746;
+    color: white;
+}
+
+QPushButton#menuButton:pressed {
+    background-color: #2980b9;
+    color: white;
+}
+
+#menuButtonActive {
+    background-color: #2980b9;
+    color: white;
+    border: none;
+    text-align: left;
+    padding: 12px 20px;
+    font-size: 14px;
+    border-radius: 6px;
+}
+
+#title {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#subtitle {
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+#card {
+    background-color: white;
+    border-radius: 12px;
+    border: 1px solid #e5e7e9;
+    min-height: 110px;
+}
+
+#cardTitle {
+    color: #7f8c8d;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+#cardValue {
+    color: #202124;
+    font-size: 26px;
+    font-weight: bold;
+}

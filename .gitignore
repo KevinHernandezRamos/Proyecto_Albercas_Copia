@@ -1,0 +1,24 @@
+# Entorno virtual
+venv/
+.venv/
+
+# Archivos temporales de Python
+__pycache__/
+*.py[cod]
+
+# Configuración local
+.env
+
+# Archivos de Visual Studio Code
+.vscode/
+
+# Base de datos institucional
+*.xlsm
+*.xlsx
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Bases de datos generadas
+*.db
