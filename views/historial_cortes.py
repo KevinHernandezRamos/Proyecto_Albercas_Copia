@@ -29,58 +29,37 @@ class HistorialCortesWindow(QWidget):
     def crear_interfaz(self):
 
         layout_principal = QVBoxLayout(self)
-
-        # ==========================================
         # TITULO
-        # ==========================================
-
         titulo = QLabel("Historial de cortes de caja")
         titulo.setObjectName("tituloPrincipal")
 
         layout_principal.addWidget(titulo)
-
         subtitulo = QLabel(
             "Consulta los cortes de caja registrados."
         )
-
         subtitulo.setObjectName("subtituloPrincipal")
-
         layout_principal.addWidget(subtitulo)
-
-        # ==========================================
         # BUSQUEDA
-        # ==========================================
-
         busqueda_layout = QHBoxLayout()
-
         self.buscar_input = QLineEdit()
-
         self.buscar_input.setPlaceholderText(
             "Buscar por empleado o fecha..."
         )
-
         boton_buscar = QPushButton("Buscar")
-
         boton_buscar.clicked.connect(
             self.buscar_cortes
         )
-
         boton_actualizar = QPushButton("Mostrar todo")
-
         boton_actualizar.clicked.connect(
             self.cargar_cortes
         )
-
         busqueda_layout.addWidget(self.buscar_input)
         busqueda_layout.addWidget(boton_buscar)
         busqueda_layout.addWidget(boton_actualizar)
-
         layout_principal.addLayout(busqueda_layout)
 
-        # ==========================================
-        # TABLA
-        # ==========================================
 
+        # TABLA
         self.tabla_cortes = QTableWidget()
 
         self.tabla_cortes.setColumnCount(7)
@@ -106,58 +85,35 @@ class HistorialCortesWindow(QWidget):
         self.tabla_cortes.setSelectionBehavior(
             QTableWidget.SelectRows
         )
-
         self.tabla_cortes.setSelectionMode(
             QTableWidget.SingleSelection
         )
-
         layout_principal.addWidget(self.tabla_cortes)
 
-        # ==========================================
-        # RESUMEN
-        # ==========================================
 
+        # RESUMEN
         self.total_cortes_label = QLabel(
             "Cortes registrados: 0"
         )
-
         self.total_cortes_label.setObjectName("cardTitle")
 
         layout_principal.addWidget(
             self.total_cortes_label
         )
-
-    # ==========================================
     # CARGAR CORTES
-    # ==========================================
-
     def cargar_cortes(self):
-
         self.buscar_input.clear()
-
         self.consultar_cortes("")
 
-    # ==========================================
     # BUSCAR CORTES
-    # ==========================================
-
     def buscar_cortes(self):
-
         texto = self.buscar_input.text().strip()
-
         self.consultar_cortes(texto)
-
-    # ==========================================
     # CONSULTAR BASE DE DATOS
-    # ==========================================
-
     def consultar_cortes(self, texto):
-
         conexion = conectar()
         cursor = conexion.cursor()
-
         try:
-
             cursor.execute("""
                 SELECT
                     c.id,
