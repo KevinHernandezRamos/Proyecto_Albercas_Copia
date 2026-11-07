@@ -1,34 +1,21 @@
 import sqlite3
 from pathlib import Path
-
-
 # Ubicación de la base de datos
 BASE_DIR = Path(__file__).resolve().parent
 DB_PATH = BASE_DIR / "aberacas.db"
-
-
 def conectar():
     conexion = sqlite3.connect(DB_PATH)
-
     conexion.row_factory = sqlite3.Row
-
     conexion.execute(
         "PRAGMA foreign_keys = ON"
     )
-
     return conexion
 
 
 def crear_base_datos():
-
     conexion = conectar()
-
     cursor = conexion.cursor()
-
-    # ==========================================
     # TABLA USUARIOS
-    # ==========================================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS usuarios (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -47,11 +34,7 @@ def crear_base_datos():
             fecha_fin_registro TEXT
         )
     """)
-
-    # ==========================================
     # TABLA EMPLEADOS
-    # ==========================================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS empleados (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -64,11 +47,7 @@ def crear_base_datos():
             activo INTEGER DEFAULT 1
         )
     """)
-
-    # ==========================================
     # TABLA PRODUCTOS
-    # ==========================================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS productos (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -87,11 +66,7 @@ def crear_base_datos():
             activo INTEGER DEFAULT 1
         )
     """)
-
-    # ==========================================
     # TABLA VENTAS
-    # ==========================================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS ventas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -105,19 +80,13 @@ def crear_base_datos():
             total REAL DEFAULT 0,
             metodo_pago TEXT,
             estatus TEXT DEFAULT 'Completada',
-
             FOREIGN KEY (empleado_id)
                 REFERENCES empleados(id),
-
             FOREIGN KEY (cliente_id)
                 REFERENCES usuarios(id)
         )
     """)
-
-    # ==========================================
     # DETALLE DE VENTAS
-    # ==========================================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS detalle_ventas (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -127,19 +96,13 @@ def crear_base_datos():
             precio_unitario REAL NOT NULL,
             descuento REAL DEFAULT 0,
             subtotal REAL NOT NULL,
-
             FOREIGN KEY (venta_id)
                 REFERENCES ventas(id),
-
             FOREIGN KEY (producto_id)
                 REFERENCES productos(id)
         )
     """)
-
-    # ==========================================
     # ASISTENCIAS
-    # ==========================================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS asistencias (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -148,16 +111,11 @@ def crear_base_datos():
             hora_entrada TEXT,
             hora_salida TEXT,
             permiso_especial TEXT,
-
             FOREIGN KEY (usuario_id)
                 REFERENCES usuarios(id)
         )
     """)
-
-    # ==========================================
     # CORTES DE CAJA
-    # ==========================================
-
     cursor.execute("""
         CREATE TABLE IF NOT EXISTS cortes_caja (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -167,19 +125,12 @@ def crear_base_datos():
             total_dia REAL DEFAULT 0,
             total_recaudado REAL DEFAULT 0,
             diferencia REAL DEFAULT 0,
-
             FOREIGN KEY (empleado_id)
                 REFERENCES empleados(id)
         )
     """)
-
     conexion.commit()
-
     conexion.close()
-
-
 if __name__ == "__main__":
-
     crear_base_datos()
-
     print("Base de datos creada correctamente.")
