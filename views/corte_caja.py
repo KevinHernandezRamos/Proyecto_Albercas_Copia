@@ -367,38 +367,24 @@ class CorteCajaWindow(QWidget):
                 self.total_recaudado,
                 self.diferencia
             ))
-
             conexion.commit()
-
             QMessageBox.information(
                 self,
                 "Corte guardado",
                 "El corte de caja se guardó correctamente."
             )
-
         except Exception as error:
-
             conexion.rollback()
-
             QMessageBox.critical(
                 self,
                 "Error",
                 f"No se pudo guardar el corte:\n{error}"
             )
-
         finally:
             conexion.close()
-
-
-# ==========================================
 # EJECUTAR VENTANA PARA PRUEBAS
-# ==========================================
-
 if __name__ == "__main__":
-
     app = QApplication(sys.argv)
-
     ventana = CorteCajaWindow()
     ventana.show()
-
     sys.exit(app.exec())
