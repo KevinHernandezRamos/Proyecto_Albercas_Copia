@@ -1,12 +1,4 @@
-
-
-FALTA AGREGAR DISEÑO A TODA LA INTERFAZ (DEJAR PARA LOS PUNTOS FINALES DEL DESARROLLO)
-
-FALTA EMPEZAR CON EL CORTE DE CAJA DEL DASHBOARD
-
-QUITAR EL MENU DEL DASHBOARD DEL MENU
-
-
+CODIGO BASURA PARA REUTILIZAR DESPUES
 def consultar_dia(self):
     fecha = self.filtro_fecha.date().toString(
         "yyyy-MM-dd"
@@ -25,14 +17,6 @@ def consultar_dia(self):
     cursor.execute("""
         SELECT)
     )
-
-        administramos las cuentas de cada persona para llevar un mejor control en cuanto a la diferencia de ambos equipos anotan
-        a lo largo de la vida, segun la entrada de cada personas se llega antes de las diferencias de cada administracion encuanto
-        a la diferencia de las mujeres en todas las entradas de las cosas entre las que llegan el v8 de ford mustang shelby gt500
-        entre muchos llega el corvette zr1x con un V8 supercargado de 1200 horsepower y una aceleracion aproximada de menos de 2 segundos para el 0-100
-        entre los mejores coches largos de la vida se tienen autos como el mclaren senna, hennessey velociraptor
-
-
 def consultar_dia(self):
         fecha = self.filtro_fecha.date().toString(
             "yyyy-MM-dd"
