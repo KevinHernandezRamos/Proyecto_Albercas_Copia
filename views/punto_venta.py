@@ -157,11 +157,7 @@ class PagoDialog(QDialog):
     def confirmar_pago(self):
 
             metodo = self.metodo_combo.currentText()
-
-            # ==========================================
             # EFECTIVO
-            # ==========================================
-
             if metodo == "Efectivo":
 
                 recibido = self.recibido_spin.value()
@@ -181,20 +177,11 @@ class PagoDialog(QDialog):
 
                 self.dinero_recibido = recibido
                 self.cambio = recibido - self.total
-
-        # ==========================================
         # TARJETA / TRANSFERENCIA
-        # ==========================================
-
             else:
-
                 self.dinero_recibido = self.total
                 self.cambio = 0
-
-        # ==========================================
         # GUARDAR MÉTODO DE PAGO
-        # ==========================================
-
             self.metodo_pago = metodo
             self.accept()
 
@@ -212,11 +199,7 @@ class PuntoVentaWindow(QWidget):
             self.carrito = []
             self.crear_interfaz()
             self.cargar_productos()
-
-    # ======================================
     # CREAR INTERFAZ
-    # ======================================
-
     def crear_interfaz(self):
 
         layout_principal = QVBoxLayout()
@@ -229,84 +212,54 @@ class PuntoVentaWindow(QWidget):
         )
 
         layout_principal.setSpacing(15)
-
-
-        # ==================================
         # ENCABEZADO
-        # ==================================
-
         titulo = QLabel(
             "Punto de Venta"
         )
-
         titulo.setObjectName(
             "tituloPrincipal"
         )
-
         subtitulo = QLabel(
             "Venta de productos y servicios"
         )
-
         subtitulo.setObjectName(
             "subtituloPrincipal"
         )
-
         layout_principal.addWidget(
             titulo
         )
-
         layout_principal.addWidget(
             subtitulo
         )
-
-
-        # ==================================
         # BÚSQUEDA
-        # ==================================
-
         barra_busqueda = QHBoxLayout()
-
         self.buscar_input = QLineEdit()
-
         self.buscar_input.setPlaceholderText(
             "Buscar producto por código o nombre..."
         )
-
         boton_buscar = QPushButton(
             "Buscar"
         )
-
         boton_buscar.clicked.connect(
             self.buscar_productos
         )
-
         self.buscar_input.textChanged.connect(
             self.buscar_productos
         )
-
         barra_busqueda.addWidget(
             self.buscar_input
         )
-
         barra_busqueda.addWidget(
             boton_buscar
         )
-
         layout_principal.addLayout(
             barra_busqueda
         )
-
-
-        # ==================================
         # TABLA DE PRODUCTOS
-        # ==================================
-
         self.tabla_productos = QTableWidget()
-
         self.tabla_productos.setColumnCount(
             5
         )
-
         self.tabla_productos.setHorizontalHeaderLabels([
             "Código",
             "Producto",
@@ -314,58 +267,41 @@ class PuntoVentaWindow(QWidget):
             "Precio",
             "Existencia"
         ])
-
         self.tabla_productos.setSelectionBehavior(
             QTableWidget.SelectRows
         )
-
         self.tabla_productos.setSelectionMode(
             QTableWidget.SingleSelection
         )
-
         self.tabla_productos.setEditTriggers(
             QTableWidget.NoEditTriggers
         )
-
         self.tabla_productos.horizontalHeader().setSectionResizeMode(
             QHeaderView.Stretch
         )
-
         self.tabla_productos.doubleClicked.connect(
             self.agregar_al_carrito
         )
-
         layout_principal.addWidget(
             self.tabla_productos
-        )
-
-
-        # ==================================
+        ) 
         # BOTONES
-        # ==================================
-
         botones = QHBoxLayout()
-
         boton_agregar = QPushButton(
             "Agregar al carrito"
         )
-
         boton_agregar.clicked.connect(
             self.agregar_al_carrito
         )
-
         boton_limpiar = QPushButton(
             "Limpiar carrito"
         )
-
         boton_limpiar.clicked.connect(
             self.limpiar_carrito
         )
-
         boton_cobrar = QPushButton(
             "Cobrar venta"
         )
-
         boton_cobrar.clicked.connect(
             self.cobrar_venta
         )
@@ -388,11 +324,7 @@ class PuntoVentaWindow(QWidget):
             botones
         )
 
-
-        # ==================================
         # CARRITO
-        # ==================================
-
         carrito_titulo = QLabel(
             "Carrito de compra"
         )
@@ -430,12 +362,7 @@ class PuntoVentaWindow(QWidget):
         layout_principal.addWidget(
             self.tabla_carrito
         )
-
-
-        # ==================================
         # TOTAL
-        # ==================================
-
         total_layout = QHBoxLayout()
 
         total_layout.addStretch()
@@ -462,16 +389,11 @@ class PuntoVentaWindow(QWidget):
         )
 
 
-    # ======================================
+
     # CARGAR PRODUCTOS
-    # ======================================
-
     def cargar_productos(self):
-
         conexion = conectar()
-
         cursor = conexion.cursor()
-
         cursor.execute("""
             SELECT
                 id,
@@ -484,34 +406,22 @@ class PuntoVentaWindow(QWidget):
             WHERE activo = 1
             ORDER BY nombre ASC
         """)
-
         self.productos = cursor.fetchall()
-
         conexion.close()
-
         self.mostrar_productos(
             self.productos
         )
 
-
-    # ======================================
     # MOSTRAR PRODUCTOS
-    # ======================================
-
     def mostrar_productos(self, productos):
-
         self.tabla_productos.setRowCount(
             0
         )
-
         for producto in productos:
-
             fila = self.tabla_productos.rowCount()
-
             self.tabla_productos.insertRow(
                 fila
             )
-
             datos = [
                 producto["codigo"],
                 producto["nombre"],
@@ -519,19 +429,16 @@ class PuntoVentaWindow(QWidget):
                 f"${producto['precio_final']:.2f}",
                 producto["existencia"]
             ]
-
             for columna, dato in enumerate(datos):
 
                 item = QTableWidgetItem(
                     str(dato)
                 )
-
                 self.tabla_productos.setItem(
                     fila,
                     columna,
                     item
                 )
-
             self.tabla_productos.item(
                 fila,
                 0
@@ -539,21 +446,15 @@ class PuntoVentaWindow(QWidget):
                 256,
                 producto["id"]
             )
-
-
-    # ======================================
     # BUSCAR PRODUCTOS
-    # ======================================
-
+ 
     def buscar_productos(self):
-
         texto = (
             self.buscar_input
             .text()
             .strip()
             .lower()
         )
-
         if not texto:
 
             self.mostrar_productos(
@@ -586,12 +487,7 @@ class PuntoVentaWindow(QWidget):
         self.mostrar_productos(
             resultados
         )
-
-
-    # ======================================
     # AGREGAR AL CARRITO
-    # ======================================
-
     def agregar_al_carrito(self):
 
         fila = self.tabla_productos.currentRow()
@@ -664,35 +560,22 @@ class PuntoVentaWindow(QWidget):
         })
 
         self.mostrar_carrito()
-
-
-    # ======================================
     # MOSTRAR CARRITO
-    # ======================================
-
     def mostrar_carrito(self):
-
         self.tabla_carrito.setRowCount(
             0
         )
-
         total = 0
-
         for item_carrito in self.carrito:
-
             fila = self.tabla_carrito.rowCount()
-
             self.tabla_carrito.insertRow(
                 fila
             )
-
             subtotal = (
                 item_carrito["cantidad"]
                 * item_carrito["precio"]
             )
-
             total += subtotal
-
             datos = [
                 item_carrito["codigo"],
                 item_carrito["nombre"],
@@ -700,9 +583,7 @@ class PuntoVentaWindow(QWidget):
                 f"${item_carrito['precio']:.2f}",
                 f"${subtotal:.2f}"
             ]
-
             for columna, dato in enumerate(datos):
-
                 self.tabla_carrito.setItem(
                     fila,
                     columna,
@@ -710,7 +591,6 @@ class PuntoVentaWindow(QWidget):
                         str(dato)
                     )
                 )
-
         self.total_label.setText(
             f"TOTAL: ${total:.2f}"
         )
@@ -720,102 +600,60 @@ class PuntoVentaWindow(QWidget):
 
 
 
-        # ======================================
     # COBRAR VENTA
-    # ======================================
-
     def cobrar_venta(self):
-
         if not self.carrito:
-
             QMessageBox.warning(
                 self,
                 "Carrito vacío",
                 "Agrega al menos un producto antes de cobrar."
             )
-
             return
-
         total = 0
-
         for item in self.carrito:
-
             subtotal = (
             item["cantidad"]
                 * item["precio"]
     )
-
             total += subtotal
-
-
         dialogo_pago = PagoDialog(
             total,
             self
 )
-
         resultado = dialogo_pago.exec()
-
         if resultado != QDialog.Accepted:
             return
-
         metodo_pago = dialogo_pago.metodo_pago
         dinero_recibido = dialogo_pago.dinero_recibido
         cambio = dialogo_pago.cambio
-        
-        
-
         respuesta = QMessageBox.question(
             self,
             "Confirmar venta",
             f"¿Confirmar venta por ${total:.2f}?",
             QMessageBox.Yes | QMessageBox.No
         )
-
         if respuesta != QMessageBox.Yes:
-
             return
-
         conexion = conectar()
-
         cursor = conexion.cursor()
-
         try:
-
-            # ==================================
             # GENERAR FOLIO
-            # ==================================
-
             cursor.execute("""
                 SELECT COUNT(*) + 1
                 FROM ventas
             """)
-
             numero = cursor.fetchone()[0]
-
             folio = f"V-{numero:06d}"
-
-
-            # ==================================
             # FECHA Y HORA
-            # ==================================
-
             from datetime import datetime
-
             ahora = datetime.now()
-
             fecha = ahora.strftime(
                 "%Y-%m-%d"
             )
-
             hora = ahora.strftime(
                 "%H:%M:%S"
             )
-
-
-            # ==================================
             # GUARDAR VENTA
-            # ==================================
-
             cursor.execute("""
                 INSERT INTO ventas (
                     folio,
@@ -840,21 +678,13 @@ class PuntoVentaWindow(QWidget):
                 metodo_pago,
                 "Completada"
             ))
-
             venta_id = cursor.lastrowid
-
-
-            # ==================================
             # GUARDAR DETALLES
-            # ==================================
-
             for item in self.carrito:
-
                 subtotal = (
                     item["cantidad"]
                     * item["precio"]
                 )
-
                 cursor.execute("""
                     INSERT INTO detalle_ventas (
                         venta_id,
@@ -873,12 +703,7 @@ class PuntoVentaWindow(QWidget):
                     0,
                     subtotal
                 ))
-
-
-                # ==================================
                 # DESCONTAR INVENTARIO
-                # ==================================
-
                 cursor.execute("""
                     UPDATE productos
                     SET existencia = existencia - ?,
@@ -908,13 +733,7 @@ class PuntoVentaWindow(QWidget):
             return
 
         conexion.close()
-
-
-        # ==================================
         # FINALIZAR
-        # ==================================
-
-        
         mensaje = (
         f"La venta se registró correctamente.\n\n"
         f"Folio: {folio}\n"
@@ -940,29 +759,16 @@ class PuntoVentaWindow(QWidget):
 
         self.cargar_productos()
 
-    # ======================================
+
     # LIMPIAR CARRITO
-    # ======================================
-
     def limpiar_carrito(self):
-
         self.carrito.clear()
-
         self.mostrar_carrito()
-
-
-# ==========================================
 # PRUEBA DIRECTA
-# ==========================================
-
 if __name__ == "__main__":
-
     app = QApplication(sys.argv)
-
     ventana = PuntoVentaWindow()
-
     ventana.show()
-
     sys.exit(
         app.exec()
     )
