@@ -24,9 +24,9 @@ def generar_recibo(venta, detalles, ruta_archivo):
     estilos = getSampleStyleSheet()
     elementos = []
 
-    #
+    
     #       ENCABEZADO DEL REPORTE
-    #
+    
     titulo = Paragraph(
     "<b>ALBERCA OLÍMPICA 450</b>",
     estilos["Title"]
@@ -42,9 +42,9 @@ def generar_recibo(venta, detalles, ruta_archivo):
 )
     elementos.append(Spacer(1, 8))
 
-    #
+    
     #      DATOS DE LA VENTA *AL MOMENTO, FALTA COMPLETARLA*
-    #
+    
 
 
     datos_venta = [
@@ -73,9 +73,9 @@ def generar_recibo(venta, detalles, ruta_archivo):
     elementos.append(tabla_datos)
     elementos.append(Spacer(1,10))
 
-    #
+    
     #   PRODUCTOS ACTUALES 
-    #
+    
 
     elementos.append(
         Paragraph(
@@ -182,9 +182,9 @@ def generar_recibo(venta, detalles, ruta_archivo):
 
 
 
-    #
+    
     #   TOTALES DE PAGO Y COSTO
-    #
+    
 
     datos_totales = [
         ["Subtotal:", f"${venta['subtotal']:.2f}"],
